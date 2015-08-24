@@ -1,0 +1,4 @@
+IP	PORT	SENSOR 
+127.0.0.1	2222	api
+127.0.0.1	2223	suhu
+127.0.0.1	2224	lembab
