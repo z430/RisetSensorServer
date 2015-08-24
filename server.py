@@ -56,10 +56,7 @@ def file_read():
 def serve(ports):
     listeners, socket = [], []
     for port in ports:
-        listener = 
-
-def api():
-    print()
+        listener 
 
 if __name__ == '__main__':
     file_read()
