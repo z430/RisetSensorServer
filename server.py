@@ -41,7 +41,7 @@ def getColumns(inFile, delim="\t", header=True):
                 cell = cell.strip()
                 cols[indexToName[i]] += [cell]
                 i += 1
-    return cols
+    return cols, indexToName
 
 #read the translasition file
 def file_read():
@@ -96,9 +96,13 @@ def serve(ports):
 
 if __name__ == '__main__':
 
+    test_zigbee = SensorHandler()
+    #print test_zigbee.test_data()
     translasi = file("translasi.txt", 'r')
     cols, indexToName = getColumns(translasi)
     translasi.close()
     #serve(cols['PORT'],cols['SENSOR'])
     serve (int(arg) for arg in cols['PORT'])
+    print "---------------------------------"
+
     #serve(int(arg) for arg in sys.argv[1:])
