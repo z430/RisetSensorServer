@@ -5,7 +5,7 @@ class SensorHandler:
 
     def __init__(self):
         print "init"
-        #SERIALPORT = "/dev/ttyUSB0"
+        SERIALPORT = "/dev/ttyUSB0"
     #BAUDRATE = 9600
     #self.ser = serial.Serial(SERIALPORT, BAUDRATE)
     #print self.ser
