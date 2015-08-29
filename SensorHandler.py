@@ -1,6 +1,14 @@
 from xbee import XBee
 import serial, time, datetime, sys
 
+# END_DEVICE_1
+# Serial High (SH) : 13A200
+# Serial Low  (SL) : 40B7A017
+#
+# COORDINATOR
+# SH : 13A200
+# SL : 40A62ADA
+
 class SensorHandler:
 
     def __init__(self):

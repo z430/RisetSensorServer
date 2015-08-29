@@ -1,53 +1,83 @@
-#define ARRAY_SIZE 3
+#include <XBee.h>
 
-String dataPayload[ARRAY_SIZE];
-char dumpData;
-int ledTx = 13;
-
-void setup() {
-  Serial.begin(9600);
-  dumpData = '}';
-  pinMode(ledTx, OUTPUT);
-}
-
-void loop() {
-/*
- * Dump Test Data
-  dataPir = 'w';
-  dataPayload[0] = readPir();
-  dataPayload[1] = dataPir;
-  dataPayload[2] = readSuhu();
-  Serial.print(char(dataPayload[0]));
-  Serial.print(dataPayload[0]);
-  Serial.print(dataPir);
+/* XBee Setting
+ *  PAN ID = 1222
+ *  SC = 7FFF
+ *  AP = 2
+ *  SH = 13A200
+ *  SL = 40B7A017
+ *  COORDINATOR ADDRESS
+ *  SH = 13A200
+ *  SL = 40A62ADA
 */
-  dataPayload[0] = "}";
-  dataPayload[1] = String(readPir());
-  dataPayload[2] = String(readSuhu());
 
-  for(int i=0;i<ARRAY_SIZE;i++)
-  {
-    Serial.print(dataPayload[i]);  
-    //Serial.println(dumpData);
-    digitalWrite(ledTx,HIGH);
-    delay(100);
-    digitalWrite(ledTx,LOW);
-  }
-  
-  //delay(500);
-  
+// Create the XBee Object
+XBee xbee = XBee();
+
+uint8_t payload[2] = { 0, 0};
+
+// SH + SL Address of receiving XBee
+XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x40a62ada);
+ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
+ZBTxStatusResponse txStatus = ZBTxStatusResponse();
+
+int statusLed = 13;
+int errorLed = 12;
+
+void flashLed(int pin, int times, int wait){
+	for (int i = 0; i < times; i++){
+		digitalWrite(pin, HIGH);
+		delay(wait);
+		digitalWrite(pin, LOW);
+
+		if(i + 1 < times){
+			delay(wait);
+		}
+	}
 }
 
-int readPir(){
-  int data;
-  data = 9;
+void setup(){
+	pinMode(statusLed, OUTPUT);
+	pinMode(errorLed, OUTPUT);
 
-  return data;
+	Serial.begin(9600);
+	xbee.setSerial(Serial);
 }
 
-int readSuhu(){
-  int data;
-  data = 2;
+void loop(){
+	payload[0] = 1;
+	payload[1] = 1;
 
-  return data;
+	xbee.send(zbTx);
+
+	// flash tx indicator
+	flashLed(statusLed, 1, 100);
+
+	// after sending a tx request, we expect a status response
+	// wait up to half second for the status response
+	if(xbee.readPacket(500)){
+		// got response
+
+		// should be a znet tx status
+		if(xbee.getResponse().getApiId() == ZB_TX_STATUS_RESPONSE){
+			xbee.getResponse().getZBTxStatusResponse(txStatus);
+
+			// get the delivery status, the fifth byte
+			if(txStatus.getDeliveryStatus() == SUCCESS){
+				flashLed(statusLed, 5, 500);
+			} else {
+				flashLed(errorLed, 3, 500);
+			}
+		}
+	}
+
+	else if(xbee.getResponse().isError()){
+	    
+	}
+	else {
+		flashLed(errorLed, 4, 150);
+	}
+
+	delay(500);
+
 }
