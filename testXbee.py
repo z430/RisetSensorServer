@@ -18,18 +18,7 @@ xbee = ZigBee(ser,escaped=True)
 while True:
     try:
         response = xbee.wait_read_frame()
-        sa = hex(response['source_addr_long'][4:])
-        rf = hex(response['rf_data'])
-        datalength=len(rf)
-        # if datalength is compatible with two floats
-        # then unpack the 4 byte chunks into floats
-        if datalength==16:
-            h=struct.unpack('f',response['rf_data'][0:4])[0]
-            t=struct.unpack('f',response['rf_data'][4:])[0]
-            print sa,' ',rf,' t=',t,'h=',h
-        # if it is not two floats show me what I received
-        else:
-            print sa,' ',rf
+        print response
     except KeyboardInterrupt:
         break
 

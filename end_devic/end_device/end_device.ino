@@ -1,5 +1,6 @@
 #include <XBee.h>
 
+#define ARRAY_SIZE 4
 /* XBee Setting
  *  PAN ID = 1222
  *  SC = 7FFF
@@ -14,10 +15,15 @@
 // Create the XBee Object
 XBee xbee = XBee();
 
-uint8_t payload[2] = { 0, 0};
+uint8_t payload[ARRAY_SIZE];
+
+union u_tag{
+	uint8_t b[4];
+	float fval;
+} u;
 
 // SH + SL Address of receiving XBee
-XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x40a62ada);
+XBeeAddress64 addr64 = XBeeAddress64(0x00000000, 0x00000000);
 ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
 ZBTxStatusResponse txStatus = ZBTxStatusResponse();
 
@@ -45,13 +51,17 @@ void setup(){
 }
 
 void loop(){
-	payload[0] = 1;
-	payload[1] = 1;
+
+	payload[0] = 'H';
+  	payload[1] = 0x7E;
+	payload[2] = 0x11;
+  	payload[3] = 0x13;
+  	payload[4] = 0x7D;
 
 	xbee.send(zbTx);
 
 	// flash tx indicator
-	flashLed(statusLed, 1, 100);
+	flashLed(statusLed, 3, 100);
 
 	// after sending a tx request, we expect a status response
 	// wait up to half second for the status response
