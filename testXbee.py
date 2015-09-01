@@ -11,7 +11,7 @@ def hex(bindata):
 # Open serial port
 ser = serial.Serial(PORT, BAUD_RATE)
 
-# Create API object
+# Create API objectmkk
 xbee = ZigBee(ser,escaped=True)
 
 # Continuously read and print packets
