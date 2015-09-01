@@ -11,6 +11,9 @@ import serial, time, datetime, sys
 
 class SensorHandler:
 
+    # node 16 bit MY address
+
+
     def __init__(self):
         print "init"
         SERIALPORT = "/dev/ttyUSB0"

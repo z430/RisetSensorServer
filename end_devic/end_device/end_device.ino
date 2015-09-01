@@ -18,8 +18,12 @@ XBee xbee = XBee();
 uint8_t payload[] = { 'H', 'i' };
 
 // SH + SL Address of receiving XBee
-XBeeAddress64 addr64 = XBeeAddress64(0x00000000, 0x00000000);
+XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x40a62ada);
 ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
+
+// Try using 16 bit address
+//Tx16Request tx = Tx16Request(0x0000, payload, sizeof(payload));
+
 ZBTxStatusResponse txStatus = ZBTxStatusResponse();
 
 int pin5 = 0;
