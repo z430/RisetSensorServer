@@ -15,7 +15,9 @@
 // create the XBee object
 XBee xbee = XBee();
 
-uint8_t payload[] = { 'H', 'i' };
+int pinData = 200;
+
+uint8_t payload[] = {0};
 
 // SH + SL Address of receiving XBee
 XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x40a62ada);
@@ -56,36 +58,11 @@ void loop() {
   // break down 10-bit reading into two bytes and place in payload
   
   xbee.send(zbTx);
+  payload[0] = pinData >> 8 & 0xff;
 
   // flash TX indicator
   flashLed(statusLed, 1, 100);
 
-  // after sending a tx request, we expect a status response
-  // wait up to half second for the status response
-  if (xbee.readPacket(500)) {
-    // got a response!
-
-    // should be a znet tx status               
-    if (xbee.getResponse().getApiId() == ZB_TX_STATUS_RESPONSE) {
-      xbee.getResponse().getZBTxStatusResponse(txStatus);
-
-      // get the delivery status, the fifth byte
-      if (txStatus.getDeliveryStatus() == SUCCESS) {
-        // success.  time to celebrate
-        flashLed(statusLed, 5, 50);
-      } else {
-        // the remote XBee did not receive our packet. is it powered on?
-        flashLed(errorLed, 3, 500);
-      }
-    }
-  } else if (xbee.getResponse().isError()) {
-    //nss.print("Error reading packet.  Error code: ");  
-    //nss.println(xbee.getResponse().getErrorCode());
-  } else {
-    // local XBee did not provide a timely TX Status Response -- should not happen
-    flashLed(errorLed, 2, 50);
-  }
-
-  delay(1000);
+  
 }
 

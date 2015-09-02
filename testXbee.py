@@ -18,8 +18,19 @@ xbee = ZigBee(ser,escaped=True)
 while True:
     try:
         response = xbee.wait_read_frame()
-        print response
+        sa = hex(response['source_addr_long'][4:])
+        #rf = hex(response['rf_data'][0:4])[0]
+        rf = hex(response['rf_data'][0:4])[1]
+        datalength = len(rf)
+        if datalength == 16:
+            t = struct.unpack('0', response['rf_data'][0:4])
+            print t
+        print rf
     except KeyboardInterrupt:
         break
 
 ser.close()
+
+def request_data(self, addr_low, addr_high):
+    self._addr_low = addr_low
+    self._addr_high = addr_high
