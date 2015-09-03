@@ -36,7 +36,8 @@ def explode_data():
     rf_data = print_hex(response['rf_data'])
     data_length = len(rf_data)
     if long_addr == '40b3ec8a':
-        data_api = binascii.a2b_hex(rf_data)
+        read= binascii.a2b_hex(rf_data)
+        data_api = read
         return data_api
 
 
