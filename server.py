@@ -37,16 +37,8 @@ def explode_data():
     data_length = len(rf_data)
     if long_addr == '40b3ec8a':
         data_api = binascii.a2b_hex(rf_data)
-        print data_api
         return data_api
 
-def suhu():
-    data = explode_data()
-    return data
-
-def api():
-    data = explode_data()
-    return data
 
 """
     Network Section
@@ -120,10 +112,11 @@ def serve(ports):
                 aports, aips, asensors=file_read()
                 dport=sock.getsockname()
                 if int (dport[1]) == 2222:
-                    pesan = api()
+                    pesan = explode_data()
                     c.send(str(pesan))
                 elif int (dport[1]) == 2223:
-                    c.send(str((suhu())))
+                    print "sensor gagal"
+                    #c.send(str((e))
                 sockets.append(c)
             else:
                 buf = sock.recv(80)

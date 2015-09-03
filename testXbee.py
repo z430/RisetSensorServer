@@ -29,8 +29,14 @@ while True:
          #   t = struct.unpack('0', response['rf_data'][0:4])
         #    print t
         s = binascii.a2b_hex(rf)
-        print sa, rf, datalength, s, shsa
-        print response
+        #print sa, rf, datalength, s, shsa
+        if sa == '40b7a017':
+            data_suhu = s
+            print "from ", sa, data_suhu
+        else:
+            data_api = s
+            print "from ", sa, data_api
+        #print response
     except KeyboardInterrupt:
         break
 
