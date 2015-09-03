@@ -79,7 +79,7 @@ def serve(ports):
                     c.send(str(pesan))
                 elif int (dport[1]) == 2223:
                     baca_sensor.suhu()
-                    c.send('Nih data suhunya')
+                    c.send(str(baca_sensor.suhu()))
                 sockets.append(c)
             else:
                 buf = sock.recv(80)

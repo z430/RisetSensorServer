@@ -1,34 +1,36 @@
-from xbee import XBee
+from xbee import ZigBee
 import serial, time, datetime, sys
+import binascii
 
-# END_DEVICE_1
-# Serial High (SH) : 13A200
-# Serial Low  (SL) : 40B7A017
-#
-# COORDINATOR
-# SH : 13A200
-# SL : 40A62ADA
 
 class SensorHandler:
 
-    # node 16 bit MY address
-
+    """
+        Node Address:
+            1.  SH = 13A200
+                SL = 40B3EC8A
+            2.  SH = 13A200
+                SL = 40B7A017
+    """
+    #PORT = '/dev/ttyUSB0'
+    #BAUD_RATE = 9600
 
     def __init__(self):
-        print "init"
-        SERIALPORT = "/dev/ttyUSB0"
-    #BAUDRATE = 9600
-    #self.ser = serial.Serial(SERIALPORT, BAUDRATE)
-    #print self.ser
-    #self.xbee = XBee(self.ser)
-    #print "initialize complete"
+        self.port = '/dev/ttyUSB0'
+        self.baud_rate = 9600
+        self.ser = serial.Serial(self.port, self.baud_rate)
+        self.xbee = ZigBee(self.ser, escaped=True)
+
+    def explode_data(self):
+        self.response = self.xbee.wait_read_frame()
+        self.long_addr = hex(self.response['source_addr_long'][4:])
+        self.rf_data = hex(self.response['rf_data'])
+        self.data_length = len(self.rf_data)
 
     def suhu(self):
-        print "suhu sekarang"
+        if self.long_addr == '40b3ec8a':
+            data_readable = binascii.a2b_hex(self.rf_data)
+            return data_readable
 
     def api(self):
         print "api:"
-
-    def test_data(self):
-        #response = self.xbee.wait_read_frame()
-        print "Lontong"

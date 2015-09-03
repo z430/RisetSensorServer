@@ -1,3 +1,4 @@
+import binascii
 from xbee import ZigBee
 import serial
 import struct
@@ -19,13 +20,17 @@ while True:
     try:
         response = xbee.wait_read_frame()
         sa = hex(response['source_addr_long'][4:])
-        #rf = hex(response['rf_data'][0:4])[0]
-        rf = hex(response['rf_data'][0:4])[1]
+        rf = hex(response['rf_data'])
+        shsa = hex(response['source_addr'])
+        #rf = hex(response['rf_data'][0:4])[1]
         datalength = len(rf)
-        if datalength == 16:
-            t = struct.unpack('0', response['rf_data'][0:4])
-            print t
-        print rf
+        #h = struct.unpack('f',response['rf_data'][4:])[0]
+        #if datalength == 16:
+         #   t = struct.unpack('0', response['rf_data'][0:4])
+        #    print t
+        s = binascii.a2b_hex(rf)
+        print sa, rf, datalength, s, shsa
+        print response
     except KeyboardInterrupt:
         break
 
