@@ -25,7 +25,7 @@ XBee xbee = XBee();
 
 int pinData = 200;
 
-uint8_t payload[] = {'h','e','l','l','o'};
+uint8_t payload[] = {'l','o','n','t','o', 'n', 'g'};
 
 // SH + SL Address of receiving XBee
 XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x40a62ada);
