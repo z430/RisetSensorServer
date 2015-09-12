@@ -23,12 +23,10 @@
 // create the XBee object
 XBee xbee = XBee();
 
-int pinData = 200;
-
-uint8_t payload[] = {'h','e','l','l','o', 'o', 'o'};
+uint8_t payload[] = {0};
 
 // SH + SL Address of receiving XBee
-XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x40a62ada);
+XBeeAddress64 addr64 = XBeeAddress64(0x00000000, 0x00000000); //send to coordinator
 ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
 
 // Try using 16 bit address
@@ -36,8 +34,7 @@ ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
 
 ZBTxStatusResponse txStatus = ZBTxStatusResponse();
 
-int pin5 = 0;
-
+int dumpData;
 int statusLed = 13;
 int errorLed = 12;
 
@@ -63,10 +60,17 @@ void setup() {
 }
 
 void loop() {   
-  // break down 10-bit reading into two bytes and place in payload
-
+  
+  // data diubah ke hex kemudian dikirim per 8 bit
+  dumpData = random(0, 255);;
+  
+  payload[0] = dumpData;
+  
   xbee.send(zbTx);
-  delay(100);
+
+  flashLed(statusLed, 1, 100);
+
+  delay(10);
   // flash TX indicator
   
 }

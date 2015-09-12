@@ -7,6 +7,7 @@ import struct
 import serial
 from xbee import ZigBee
 import binascii
+from xbeeser import *
 
 aports=0
 aips=0
@@ -18,7 +19,7 @@ format = struct.Struct('!I')
 
 """
     zigbee data section
-"""
+
 
 def init_serial():
     port = '/dev/ttyUSB0'
@@ -26,21 +27,33 @@ def init_serial():
     ser = serial.Serial(port, baud_rate)
     return ser
 
+xbee = ZigBee(init_serial(), escaped=True)
+
 def print_hex(bindata):
-    return ''.join('%02x' % ord(byte) for byte in bindata)
+    return ''.join('%2x' % ord(byte) for byte in bindata)
 
 def explode_data():
-    xbee = ZigBee(init_serial(), escaped=True)
+
     response = xbee.wait_read_frame()
-    long_addr = print_hex(response['source_addr_long'][4:])
+    long_addr = print_hex(response['source_addr_long'][4:1])
     rf_data = print_hex(response['rf_data'])
-    data_length = len(rf_data)
-    if long_addr == '40b3ec8a':
-        read= binascii.a2b_hex(rf_data)
-        data_api = read
-        return data_api
 
+    return rf_data, long_addr
 
+def sensor_api():
+    data, alamat = explode_data()
+    #print data, alamat
+    if alamat  == '40b7a017':
+        data_sensor = binascii.a2b_hex(data)
+        return data_sensor
+
+def sensor_suhu():
+    data, alamat = explode_data()
+    #print data, alamat
+    if alamat == '40b3ec8a':
+        suhu = binascii.a2b_hex(data)
+        return suhu
+"""
 """
     Network Section
 """
@@ -113,11 +126,12 @@ def serve(ports):
                 aports, aips, asensors=file_read()
                 dport=sock.getsockname()
                 if int (dport[1]) == 2222:
-                    pesan = explode_data()
-                    c.send(str(pesan))
+                    data_api = sensor_api()
+                    c.send(str(data_api))
+
                 elif int (dport[1]) == 2223:
-                    print "sensor gagal"
-                    #c.send(str((e))
+                    data_suhu = sensor_suhu()
+                    c.send(str(data_suhu))
                 sockets.append(c)
             else:
                 buf = sock.recv(80)

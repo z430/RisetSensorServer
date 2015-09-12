@@ -22,21 +22,9 @@ while True:
         sa = hex(response['source_addr_long'][4:])
         rf = hex(response['rf_data'])
         shsa = hex(response['source_addr'])
-        #rf = hex(response['rf_data'][0:4])[1]
         datalength = len(rf)
-        #h = struct.unpack('f',response['rf_data'][4:])[0]
-        #if datalength == 16:
-         #   t = struct.unpack('0', response['rf_data'][0:4])
-        #    print t
-        s = binascii.a2b_hex(rf)
-        #print sa, rf, datalength, s, shsa
-        if sa == '40b7a017':
-            data_suhu = s
-            print "from ", sa, data_suhu
-        else:
-            data_api = s
-            print "from ", sa, data_api
-        #print response
+
+        print response, int(rf, 16), rf
     except KeyboardInterrupt:
         break
 
