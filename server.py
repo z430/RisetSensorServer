@@ -82,9 +82,10 @@ def serve(ports):
         print(listener.getsockname(), ' listening')
     while True:
         # debugging sensor data value
-        #print_status()
+        print_status()
 
         # fetch data first before send it to client
+
         data_suhu = sensor_suhu()
         data_api = sensor_api()
 
@@ -96,10 +97,10 @@ def serve(ports):
                 aports, aips, asensors=file_read()
                 dport=sock.getsockname()
                 if int (dport[1]) == 2222:
-                    #c.send(str('nilai sensor api:'))
+                    #c.send('nilai sensor api:')
                     c.send(str(data_api))
                 elif int (dport[1]) == 2223:
-                    #c.send(str('nilai sensor suhu:'))
+                    #c.send('nilai sensor suhu:')
                     c.send(str(data_suhu))
                 sockets.append(c)
             else:
