@@ -18,43 +18,6 @@ loop=0
 format = struct.Struct('!I')
 
 """
-    zigbee data section
-
-
-def init_serial():
-    port = '/dev/ttyUSB0'
-    baud_rate = 9600
-    ser = serial.Serial(port, baud_rate)
-    return ser
-
-xbee = ZigBee(init_serial(), escaped=True)
-
-def print_hex(bindata):
-    return ''.join('%2x' % ord(byte) for byte in bindata)
-
-def explode_data():
-
-    response = xbee.wait_read_frame()
-    long_addr = print_hex(response['source_addr_long'][4:1])
-    rf_data = print_hex(response['rf_data'])
-
-    return rf_data, long_addr
-
-def sensor_api():
-    data, alamat = explode_data()
-    #print data, alamat
-    if alamat  == '40b7a017':
-        data_sensor = binascii.a2b_hex(data)
-        return data_sensor
-
-def sensor_suhu():
-    data, alamat = explode_data()
-    #print data, alamat
-    if alamat == '40b3ec8a':
-        suhu = binascii.a2b_hex(data)
-        return suhu
-"""
-"""
     Network Section
 """
 def send(sock, message):
