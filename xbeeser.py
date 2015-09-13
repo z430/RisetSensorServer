@@ -46,3 +46,6 @@ def sensor_suhu():
     if alamat == '40b3ec8a':
         data_suhu = data
         return int(data_suhu, 16)
+
+def print_status():
+    print sensor_suhu(), sensor_api()
