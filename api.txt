@@ -1,0 +1,11 @@
+execution time: 0.00900197029114
+execution time: 0.000552892684937
+execution time: 0.00261998176575
+execution time: 0.000549077987671
+execution time: 0.000550985336304
+execution time: 0.000550985336304
+execution time: 0.00054407119751
+execution time: 0.000567197799683
+execution time: 0.000553131103516
+execution time: 0.00357484817505
+execution time: 0.00248122215271
