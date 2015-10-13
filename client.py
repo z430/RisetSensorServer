@@ -36,10 +36,7 @@ else:
     s.connect((HOST, PORT))
     send(s, 'HELLO')
     data = s.recv(4096)
-    executeTime = time.time() - start_time
-    print ("execution time: %s" % executeTime)
-    timeData.write(str(executeTime))
-    timeData.write("\n")
-    timeData.close()
+    print ("execution time: %s\t" % (time.time() - start_time) + "data_sensor: %s" % data)
     s.close()
+    timeData.close()
     #print data

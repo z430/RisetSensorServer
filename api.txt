@@ -1,11 +1,20 @@
-execution time: 0.00900197029114
-execution time: 0.000552892684937
-execution time: 0.00261998176575
-execution time: 0.000549077987671
-execution time: 0.000550985336304
-execution time: 0.000550985336304
-execution time: 0.00054407119751
-execution time: 0.000567197799683
-execution time: 0.000553131103516
-execution time: 0.00357484817505
-execution time: 0.00248122215271
+execution time: 0.00586295127869	data_sensor: 23
+execution time: 0.000526905059814	data_sensor: 42
+execution time: 0.000550985336304	data_sensor: 209
+execution time: 0.000516891479492	data_sensor: 247
+execution time: 0.00187087059021	data_sensor: 19
+execution time: 0.000452995300293	data_sensor: 170
+execution time: 0.000502109527588	data_sensor: 14
+execution time: 0.00401401519775	data_sensor: 127
+execution time: 0.000550985336304	data_sensor: 219
+execution time: 0.000516891479492	data_sensor: 7
+execution time: 0.000562906265259	data_sensor: 147
+execution time: 0.000518083572388	data_sensor: 83
+execution time: 0.000476121902466	data_sensor: 100
+execution time: 0.000510931015015	data_sensor: 198
+execution time: 0.00046706199646	data_sensor: 71
+execution time: 0.000944852828979	data_sensor: 69
+execution time: 0.000546216964722	data_sensor: 173
+execution time: 0.000504970550537	data_sensor: 241
+execution time: 0.000580072402954	data_sensor: 179
+execution time: 0.000494003295898	data_sensor: 113
